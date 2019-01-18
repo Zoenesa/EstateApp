@@ -71,7 +71,7 @@ namespace EstMain
             this._datatable.Select(Value);
             radGridView1.DataSource = null;
             radGridView1.DataSource = dv.Table;
-            //radGridView1.Update();
+            radGridView1.Update();
             InitGroupData();
         }
 
