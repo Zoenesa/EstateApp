@@ -32,6 +32,8 @@
             this.radMenu1 = new Telerik.WinControls.UI.RadMenu();
             this.radMenuItemMainMenu = new Telerik.WinControls.UI.RadMenuItem();
             this.radMenuOpenDatabase = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItemReports = new Telerik.WinControls.UI.RadMenuItem();
+            this.radMenuItemOrderKWH = new Telerik.WinControls.UI.RadMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radMenu1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
@@ -47,7 +49,8 @@
             // radMenu1
             // 
             this.radMenu1.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radMenuItemMainMenu});
+            this.radMenuItemMainMenu,
+            this.radMenuItemReports});
             this.radMenu1.Location = new System.Drawing.Point(0, 0);
             this.radMenu1.Name = "radMenu1";
             this.radMenu1.Size = new System.Drawing.Size(815, 20);
@@ -58,13 +61,28 @@
             this.radMenuItemMainMenu.Items.AddRange(new Telerik.WinControls.RadItem[] {
             this.radMenuOpenDatabase});
             this.radMenuItemMainMenu.Name = "radMenuItemMainMenu";
-            this.radMenuItemMainMenu.Text = "Menu";
+            this.radMenuItemMainMenu.ShowArrow = false;
+            this.radMenuItemMainMenu.Text = "&Menu";
             // 
             // radMenuOpenDatabase
             // 
             this.radMenuOpenDatabase.Name = "radMenuOpenDatabase";
-            this.radMenuOpenDatabase.Text = "Open Database";
+            this.radMenuOpenDatabase.Text = "Open &Database";
             this.radMenuOpenDatabase.Click += new System.EventHandler(this.radMenuOpenDatabase_Click);
+            // 
+            // radMenuItemReports
+            // 
+            this.radMenuItemReports.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radMenuItemOrderKWH});
+            this.radMenuItemReports.Name = "radMenuItemReports";
+            this.radMenuItemReports.ShowArrow = false;
+            this.radMenuItemReports.Text = "&Reports";
+            // 
+            // radMenuItemOrderKWH
+            // 
+            this.radMenuItemOrderKWH.Name = "radMenuItemOrderKWH";
+            this.radMenuItemOrderKWH.Text = "Report Order ME";
+            this.radMenuItemOrderKWH.Click += new System.EventHandler(this.radMenuItemOrderKWH_Click);
             // 
             // mainForm
             // 
@@ -94,6 +112,8 @@
         private Telerik.WinControls.UI.RadMenu radMenu1;
         private Telerik.WinControls.UI.RadMenuItem radMenuItemMainMenu;
         private Telerik.WinControls.UI.RadMenuItem radMenuOpenDatabase;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItemReports;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItemOrderKWH;
     }
 }
 

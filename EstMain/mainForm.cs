@@ -40,5 +40,12 @@ namespace EstMain
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        private void radMenuItemOrderKWH_Click(object sender, EventArgs e)
+        {
+            formReports frmReport = new formReports();
+            frmReport.MdiParent = this;
+            frmReport.Show();
+        }
     }
 }
