@@ -23,7 +23,7 @@ namespace EstMain
 
         DataTable _datatable { get; set; }
 
-        GridViewColumnCollection columns;
+        Commons.LoadTable InitData;
 
         public formDataOrder(DataTable table)
         {
@@ -33,19 +33,39 @@ namespace EstMain
             this.radGridView1.GroupSummaryEvaluate += RadGridView1_GroupSummaryEvaluate;
             this._datatable = table;
             InitializeData();
-            //radDropDownList1.DataSource = columns as IEnumerable<GridViewColumn>;
+        }
+
+        public formDataOrder(Commons.LoadTable InitTable)
+        {
+            InitializeComponent();
+            DataSet ds = new DataSet();
+            this.InitData = InitTable;
+            InitData.LoadQuery();
+            InitData.Data_Table.TableName = "view_orderkwhsimple";
+            DataTable dt = new DataTable();
+            dt = InitTable.Modul.OpenTable(@"SELECT DISTINCT statusorderkwh.statusname AS `STATUS ORDER`
+                                            from orderkwh
+                                            JOIN statusorderkwh ON orderkwh.`Status` = statusorderkwh.statuscode
+                                            ORDER BY statusorderkwh.statuscode");
+            dt.TableName = "statusorderkwh";
+            ds.Tables.Add(InitTable.Data_Table);
+            ds.Tables.Add(dt);
+            controlData1.SetData(ds);
+            controlData1.btnApply.Click += BtnApply_Click;
+            this.radGridView1.DataSource = InitData.Data_Table;
+            InitGroupData();
+        }
+
+        private void BtnApply_Click(object sender, EventArgs e)
+        {
+            InitData.QueryCondition = $"WHERE `{controlData1.ColumnName??"STATUS ORDER"}` = '{controlData1.ConditionValue}'";
+            InitData.Refresh();
+            radGridView1.DataSource = InitData.Data_Table;
+            ApplyGroup();
         }
 
         private void RadGridView1_GroupSummaryEvaluate(object sender, GroupSummaryEvaluationEventArgs e)
         {
-            //if (e.SummaryItem.Name == "KAVLING")
-            //{
-            //    e.FormatString = $"Kategori Kavling: {e.Value}";
-            //}
-            //else if (e.SummaryItem.Name == "Nomor Pengajuan")
-            //{
-            //    e.FormatString = $"Kategori Pengajuan: {e.Value}";
-            //}
         }
 
         private void radGridView1_DataBindingComplete(object sender, GridViewBindingCompleteEventArgs e)
@@ -55,7 +75,9 @@ namespace EstMain
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            InitializeData("[STATUS ORDER] = 'N/A'");
+            InitData.QueryCondition = "WHERE `STATUS ORDER` = 'PAID'";
+            InitData.Refresh();
+            radGridView1.DataSource = InitData.Data_Table;
         }
 
         void InitializeData(string Value = "")
@@ -75,33 +97,58 @@ namespace EstMain
             InitGroupData();
         }
 
+        void ApplyGroup()
+        {
+            string[] grups = controlData1.CheckedColumns;
+            if (grups == null || grups.Length == 0)
+            {
+                InitGroupData();
+                return;
+            }
+                this.radGridView1.GroupDescriptors.Clear();
+            for (int i = 0; i < grups.Length; i++)
+            {
+                GroupDescriptor grup = new GroupDescriptor();
+                if (grups[i] == "Nomor Pengajuan")
+                {
+                    grup.GroupNames.Add(grups[i], ListSortDirection.Ascending);
+                    grup.Aggregates.Add($"First(`TANGGAL ORDER`)");
+                    grup.Aggregates.Add("Count(`ORDERID`)");
+                    grup.Format = "Sub Pengajuan: {1} Tanggal: {2:dd MMM yyyy} Total: {3} Unit";
+                }
+                else
+                {
+                    grup.GroupNames.Add(grups[i], ListSortDirection.Ascending);
+                    grup.Aggregates.Add($"Count(`{grups[i]}`)");
+                    grup.Format = "Sub " + grups[i] + ": {1} Subtotal: {2} Unit";
+                }
+                this.radGridView1.GroupDescriptors.Add(grup);
+            }
+        }
+
         void InitGroupData()
         {
+            this.radGridView1.GroupDescriptors.Clear();
             radGridView1.Columns["IDBLOK"].IsVisible = false;
             radGridView1.Columns["IDUNIT"].IsVisible = false;
             radGridView1.Columns["KAVLING"].IsVisible = false;
             radGridView1.Columns["NOMOR"].IsVisible = false;
             radGridView1.Columns["TANGGAL ORDER"].IsVisible = false;
-            //radGridView1.Columns["TANGGAL ORDER"].FormatString = "{0:dd MMM yyyy}";
             radGridView1.Columns["TANGGAL ORDER"].TextAlignment = ContentAlignment.MiddleRight;
             radGridView1.Columns["ORDERID"].FormatString = "#{0}";
 
             radGridView1.BestFitColumns(BestFitColumnMode.AllCells);
             radGridView1.MasterTemplate.ShowTotals = true;
-            //GridViewSummaryItem summaryItem = new GridViewSummaryItem("ORDERID", "Total {0} Unit", GridAggregateFunction.Count);
-            //GridViewSummaryRowItem summaryRowItem = new GridViewSummaryRowItem();
-            //summaryRowItem.Add(summaryItem);
-            //this.radGridView1.SummaryRowsTop.Add(summaryRowItem);
 
             GroupDescriptor grupBLOK = new GroupDescriptor();
             GroupDescriptor grupTanggalOrder = new GroupDescriptor();
             grupTanggalOrder.GroupNames.Add("Nomor Pengajuan", ListSortDirection.Ascending);
             grupTanggalOrder.Aggregates.Add("First(`TANGGAL ORDER`)");
             grupTanggalOrder.Aggregates.Add("Count(`ORDERID`)");
-            grupTanggalOrder.Format = "Kategori Pengajuan: {1} Tanggal:{2: dd MMM yyyy} Total: {3} Unit";
+            grupTanggalOrder.Format = "Sub Nomor Pengajuan: {1} Tanggal:{2: dd MMM yyyy} Total: {3} Unit";
             grupBLOK.GroupNames.Add("KAVLING", ListSortDirection.Ascending);
             grupBLOK.Aggregates.Add("Count(`BLOK - NOMOR`)");
-            grupBLOK.Format = "Kategori Kavling: {1} SubTotal: {2} Unit";
+            grupBLOK.Format = "Sub Kavling: {1} SubTotal: {2} Unit";
 
             this.radGridView1.GroupDescriptors.Add(grupTanggalOrder);
             this.radGridView1.GroupDescriptors.Add(grupBLOK);
@@ -109,14 +156,6 @@ namespace EstMain
             radGridView1.ShowGroupPanel = false;
             radGridView1.AutoExpandGroups = true;
             radGridView1.EnableFiltering = false;
-            columns = new GridViewColumnCollection(radGridView1.MasterTemplate);
-            foreach (GridViewColumn col in radGridView1.MasterTemplate.Columns)
-            {
-                RadListDataItem item = new RadListDataItem();
-                item.Text = col.Name;
-                radDropDownList1.Items.Add(item);
-            }
-
             radGridView1.Update();
         }
 

@@ -34,13 +34,10 @@
             this.statusPanelRecords = new Telerik.WinControls.UI.RadStatusBarPanelElement();
             this.commandBarSeparator1 = new Telerik.WinControls.UI.CommandBarSeparator();
             this.radStatusBarPanelElement1 = new Telerik.WinControls.UI.RadStatusBarPanelElement();
-            this.radDropDownList1 = new Telerik.WinControls.UI.RadDropDownList();
-            this.btnRefresh = new Telerik.WinControls.UI.RadButton();
+            this.controlData1 = new EstMain.controlData();
             ((System.ComponentModel.ISupportInitialize)(this.radGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radGridView1.MasterTemplate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radDropDownList1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnRefresh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,7 +46,7 @@
             this.radGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.radGridView1.Location = new System.Drawing.Point(0, 47);
+            this.radGridView1.Location = new System.Drawing.Point(0, 48);
             // 
             // 
             // 
@@ -60,7 +57,7 @@
             this.radGridView1.MasterTemplate.EnableFiltering = true;
             this.radGridView1.MasterTemplate.ViewDefinition = tableViewDefinition1;
             this.radGridView1.Name = "radGridView1";
-            this.radGridView1.Size = new System.Drawing.Size(659, 243);
+            this.radGridView1.Size = new System.Drawing.Size(702, 285);
             this.radGridView1.TabIndex = 0;
             this.radGridView1.DataBindingComplete += new Telerik.WinControls.UI.GridViewBindingCompleteEventHandler(this.radGridView1_DataBindingComplete);
             // 
@@ -70,9 +67,9 @@
             this.statusPanelRecords,
             this.commandBarSeparator1,
             this.radStatusBarPanelElement1});
-            this.radStatusStrip1.Location = new System.Drawing.Point(0, 290);
+            this.radStatusStrip1.Location = new System.Drawing.Point(0, 339);
             this.radStatusStrip1.Name = "radStatusStrip1";
-            this.radStatusStrip1.Size = new System.Drawing.Size(659, 26);
+            this.radStatusStrip1.Size = new System.Drawing.Size(702, 26);
             this.radStatusStrip1.TabIndex = 1;
             // 
             // statusPanelRecords
@@ -87,7 +84,6 @@
             // 
             this.commandBarSeparator1.Name = "commandBarSeparator1";
             this.radStatusStrip1.SetSpring(this.commandBarSeparator1, false);
-            this.commandBarSeparator1.Text = "";
             this.commandBarSeparator1.VisibleInOverflowMenu = false;
             // 
             // radStatusBarPanelElement1
@@ -98,30 +94,22 @@
             this.radStatusStrip1.SetSpring(this.radStatusBarPanelElement1, true);
             this.radStatusBarPanelElement1.Text = "";
             // 
-            // radDropDownList1
+            // controlData1
             // 
-            this.radDropDownList1.Location = new System.Drawing.Point(12, 12);
-            this.radDropDownList1.Name = "radDropDownList1";
-            this.radDropDownList1.NullText = "Data Kolom";
-            this.radDropDownList1.Size = new System.Drawing.Size(159, 20);
-            this.radDropDownList1.TabIndex = 2;
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Location = new System.Drawing.Point(196, 9);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(110, 24);
-            this.btnRefresh.TabIndex = 3;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            this.controlData1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.controlData1.BackColor = System.Drawing.Color.Transparent;
+            this.controlData1.Location = new System.Drawing.Point(0, 12);
+            this.controlData1.Name = "controlData1";
+            this.controlData1.Size = new System.Drawing.Size(701, 30);
+            this.controlData1.TabIndex = 4;
             // 
             // formDataOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(659, 316);
-            this.Controls.Add(this.btnRefresh);
-            this.Controls.Add(this.radDropDownList1);
+            this.ClientSize = new System.Drawing.Size(702, 365);
+            this.Controls.Add(this.controlData1);
             this.Controls.Add(this.radGridView1);
             this.Controls.Add(this.radStatusStrip1);
             this.Name = "formDataOrder";
@@ -133,8 +121,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radGridView1.MasterTemplate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radDropDownList1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnRefresh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -148,7 +134,6 @@
         private Telerik.WinControls.UI.RadStatusBarPanelElement statusPanelRecords;
         private Telerik.WinControls.UI.CommandBarSeparator commandBarSeparator1;
         private Telerik.WinControls.UI.RadStatusBarPanelElement radStatusBarPanelElement1;
-        private Telerik.WinControls.UI.RadDropDownList radDropDownList1;
-        private Telerik.WinControls.UI.RadButton btnRefresh;
+        private controlData controlData1;
     }
 }

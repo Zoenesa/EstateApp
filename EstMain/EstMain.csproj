@@ -59,6 +59,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commons.cs" />
+    <Compile Include="controlData.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controlData.Designer.cs">
+      <DependentUpon>controlData.cs</DependentUpon>
+    </Compile>
     <Compile Include="formDataOrder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +80,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="controlData.resx">
+      <DependentUpon>controlData.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="formDataOrder.resx">
       <DependentUpon>formDataOrder.cs</DependentUpon>
     </EmbeddedResource>

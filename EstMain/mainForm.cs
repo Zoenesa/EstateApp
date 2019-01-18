@@ -28,7 +28,9 @@ namespace EstMain
                 {
                     //Telerik.WinControls.RadMessageBox.Show(this, "Connected");
                     DataTable dt = mod.OpenTable("SELECT * FROM view_orderkwhsimple");
-                    formDataOrder dataOrder = new formDataOrder(dt);
+                    Commons.LoadTable init = new Commons.LoadTable(mod);
+                    init.QuerySelect = "SELECT * FROM view_orderkwhsimple";
+                    formDataOrder dataOrder = new formDataOrder(init);
                     dataOrder.MdiParent = this;
                     dataOrder.Show();
                 }
