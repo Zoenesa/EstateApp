@@ -52,8 +52,14 @@ namespace EstMain
             ds.Tables.Add(dt);
             controlData1.SetData(ds);
             controlData1.btnApply.Click += BtnApply_Click;
+            controlData1.btnGroupBy.Click += BtnGroupBy_Click;
             this.radGridView1.DataSource = InitData.Data_Table;
             InitGroupData();
+        }
+
+        private void BtnGroupBy_Click(object sender, EventArgs e)
+        {
+            ApplyGroup();
         }
 
         private void BtnApply_Click(object sender, EventArgs e)
@@ -61,7 +67,6 @@ namespace EstMain
             InitData.QueryCondition = $"WHERE `{controlData1.ColumnName??"STATUS ORDER"}` = '{controlData1.ConditionValue}'";
             InitData.Refresh();
             radGridView1.DataSource = InitData.Data_Table;
-            ApplyGroup();
         }
 
         private void RadGridView1_GroupSummaryEvaluate(object sender, GroupSummaryEvaluationEventArgs e)

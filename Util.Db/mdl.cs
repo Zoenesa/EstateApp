@@ -8,13 +8,14 @@ using MySql.Data.MySqlClient;
 
 namespace Util.Db
 {
-
     public class mdl
     {
-        MySqlConnection Connection { get { return conn; } }
+        public MySqlConnection Connection { get { return conn; } }
+
+        public string Connection_String { get { return Connection.ConnectionString; } }
 
         MySqlConnection conn { get; set; }
-        
+
         public bool Connect()
         {
             bool _flag = false;
