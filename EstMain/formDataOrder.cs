@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telerik.WinControls.Data;
 using Telerik.WinControls.UI;
+using EstMain.Controls;
 
 namespace EstMain
 {
@@ -53,6 +54,7 @@ namespace EstMain
             controlData1.SetData(ds);
             controlData1.btnApply.Click += BtnApply_Click;
             controlData1.btnGroupBy.Click += BtnGroupBy_Click;
+            controlData1.btnReset.Click += btnReset_Click;
             this.radGridView1.DataSource = InitData.Data_Table;
             InitGroupData();
         }
@@ -62,6 +64,14 @@ namespace EstMain
             ApplyGroup();
         }
 
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            InitData.QueryCondition = string.Empty;
+            InitData.Refresh();
+            radGridView1.DataSource = InitData.Data_Table;
+            InitGroupData();
+        }
+
         private void BtnApply_Click(object sender, EventArgs e)
         {
             InitData.QueryCondition = $"WHERE `{controlData1.ColumnName??"STATUS ORDER"}` = '{controlData1.ConditionValue}'";
@@ -69,9 +79,7 @@ namespace EstMain
             radGridView1.DataSource = InitData.Data_Table;
         }
 
-        private void RadGridView1_GroupSummaryEvaluate(object sender, GroupSummaryEvaluationEventArgs e)
-        {
-        }
+        private void RadGridView1_GroupSummaryEvaluate(object sender, GroupSummaryEvaluationEventArgs e) { }
 
         private void radGridView1_DataBindingComplete(object sender, GridViewBindingCompleteEventArgs e)
         {

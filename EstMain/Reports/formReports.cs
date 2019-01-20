@@ -27,10 +27,18 @@ namespace EstMain
             this.HeaderText = HeaderText;
         }
 
+        public formReports(string fileReportTrd, DataTable Data_Table, string HeaderText = "")
+        {
+            this._fileReportTrd = fileReportTrd;
+            this.dataTable = Data_Table;
+            this.HeaderText = HeaderText;
+        }
+
         private string _fileReportTrd;
         private string ConnectionString;
         private string Command;
         private string HeaderText;
+        private DataTable dataTable;
 
         void InitReport()
         {
@@ -43,12 +51,14 @@ namespace EstMain
                 {
                     Uri = this._fileReportTrd
                 };
+
                 reportSource =
                 rcsm.UpdateReportSource(uriSource);
                 if (!string.IsNullOrEmpty(this.HeaderText))
                 {
                     rcsm.SetItemValue(reportSource, "ReportNameTextBox", this.HeaderText);
                 }
+                this.reportViewer.ViewMode = Telerik.ReportViewer.WinForms.ViewMode.PrintPreview;
                 this.reportViewer.ReportSource = reportSource;
                 this.reportViewer.Resources.ProcessingReportMessage = "Mohon Tunggu...";
                 this.reportViewer.RefreshReport();
@@ -62,6 +72,26 @@ namespace EstMain
         private void formReports_Load(object sender, EventArgs e)
         {
             InitReport();
+        }
+
+        public void LoadFromTable()
+        {
+            // Creating and configuring the ObjectDataSource component:
+            var objectDataSource = new Telerik.Reporting.ObjectDataSource();
+            objectDataSource.DataSource = this.dataTable; // GetData returns a DataTable
+
+            // Creating a new report
+            var report = new Reports.Report1();
+
+            report.DataSource = objectDataSource;
+
+            // Use the InstanceReportSource to pass the report to the viewer for displaying
+            var reportSource = new Telerik.Reporting.InstanceReportSource();
+            reportSource.ReportDocument = report;
+
+            reportViewer.ReportSource = reportSource;
+
+            reportViewer.RefreshReport();
         }
     }
 }

@@ -34,7 +34,7 @@
             this.statusPanelRecords = new Telerik.WinControls.UI.RadStatusBarPanelElement();
             this.commandBarSeparator1 = new Telerik.WinControls.UI.CommandBarSeparator();
             this.radStatusBarPanelElement1 = new Telerik.WinControls.UI.RadStatusBarPanelElement();
-            this.controlData1 = new EstMain.controlData();
+            this.controlData1 = new EstMain.Controls.controlData();
             ((System.ComponentModel.ISupportInitialize)(this.radGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radGridView1.MasterTemplate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radStatusStrip1)).BeginInit();
@@ -134,6 +134,6 @@
         private Telerik.WinControls.UI.RadStatusBarPanelElement statusPanelRecords;
         private Telerik.WinControls.UI.CommandBarSeparator commandBarSeparator1;
         private Telerik.WinControls.UI.RadStatusBarPanelElement radStatusBarPanelElement1;
-        private controlData controlData1;
+        private EstMain.Controls.controlData controlData1;
     }
 }

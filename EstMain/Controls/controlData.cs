@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Telerik.WinControls.UI;
 
-namespace EstMain
+namespace EstMain.Controls
 {
     public partial class controlData : UserControl
     {
@@ -85,6 +85,7 @@ namespace EstMain
                 dropDownStatusOrder.Visible = false;
                 dropDownColumns.Visible = false;
                 btnApply.Visible = false;
+                btnReset.Visible = false;
                 this.btnExpand.Text = "Filter";
                 this.Height = 30;
             }
@@ -95,6 +96,7 @@ namespace EstMain
                 dropDownStatusOrder.Visible = true;
                 dropDownColumns.Visible = true;
                 btnApply.Visible = true;
+                btnReset.Visible = true;
                 this.Height = 130;
             }
         }
