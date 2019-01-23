@@ -51,8 +51,37 @@ namespace EstMain
             {
                 Telerik.WinControls.RadMessageBox.Show(this, new FileNotFoundException("File Report tidak ditemukan.").Message, "Error", MessageBoxButtons.OK, Telerik.WinControls.RadMessageIcon.Error);
             }
-            string cmd = @"
-                            SELECT
+
+            string condition = string.Empty;
+            Reports.formOrderChooser orderChooser = new Reports.formOrderChooser(Modul.OpenTable("SELECT DISTINCT statusorderkwh.statuscode, statusorderkwh.statusname FROM statusorderkwh JOIN orderkwh ON statusorderkwh.statuscode = orderkwh.status ORDER BY statusorderkwh.statuscode ASC"));
+            DialogResult result = orderChooser.ShowDialog(this);
+            if (result == DialogResult.Yes)
+            {
+                condition = "";
+                if (orderChooser.FilterValues.Count == 1)
+                {
+                    condition = $"WHERE orderkwh.status = {orderChooser.FilterValues[0]}";
+                }
+                else
+                {
+                    foreach (string item in orderChooser.FilterValues)
+                    {
+                        condition += $"{item},";
+                    }
+                    condition = condition.Remove(condition.Length - 1, 1);
+                    condition = string.Format("WHERE orderkwh.`status` IN ({0})", condition);
+                }
+            }
+            else if (result == DialogResult.No)
+            {
+                condition = string.Empty;
+            }
+            else
+            {
+                return;
+            }
+
+            string cmd = @" SELECT
                             orderkwh.id AS ORDERID,
                             orderkwh.Nama AS NAMA,
                             CONCAT( list_kavling.KAVLING, '-', list_nomor.NOMOR ) AS `NO BLOK`,
@@ -68,8 +97,9 @@ namespace EstMain
                             FROM orderkwh
                             INNER JOIN list_kavling ON orderkwh.Blok = list_kavling.`ID RECORD`
                             INNER JOIN list_nomor ON orderkwh.Nomor = list_nomor.`ID RECORD` 
-                            INNER JOIN statusorderkwh ON orderkwh.Status = statusorderkwh.statuscode
+                            INNER JOIN statusorderkwh ON orderkwh.Status = statusorderkwh.statuscode " + condition + @"
                             ORDER BY ORDERID ASC ";
+
             formReports frmReport = new formReports(filetrd, Modul.Connection_String, cmd, "Data Permintaan Pasang Listrik / Meter KWH");
             frmReport.MdiParent = this;
             frmReport.Show();
